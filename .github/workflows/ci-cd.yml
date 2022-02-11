@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  buildtest:
+  build-test:
     runs-on: ubuntu-latest
     env:
       SECRET_KEY: ${{ secrets.SECRET_KEY }}
@@ -35,6 +35,7 @@ jobs:
 
   dockerize-push:
     runs-on: ubuntu-latest
+    needs: build-test
     steps:
 
     - name: Checkout 
