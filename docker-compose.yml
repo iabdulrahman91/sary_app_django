@@ -14,7 +14,7 @@ services:
         #     "
 
         environment:
-            SECRET_KEY: 'django-insecure-uzqo*hxktxtrb85fw8(cc4&p4x$z5c@b0s1+0j-)s%e8vtku17'
+            SECRET_KEY: '${SECRET_KEY=}'
             DB_ENGINE: django.db.backends.postgresql
             DB_NAME: '${DB_DATABASE}'
             DB_USERNAME: '${DB_USERNAME}'
