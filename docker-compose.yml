@@ -1,0 +1,61 @@
+version: '3'
+services:
+    django.test:
+        build:
+            context: ./
+            dockerfile: Dockerfile
+        image: sary-app-django
+        ports:
+            - '8000:8000'
+        # command: bash -c "
+        #     python manage.py makemigrations 
+        #     && python manage.py migrate
+        #     && python manage.py runserver 0.0.0.0:8000
+        #     "
+
+        environment:
+            SECRET_KEY: 'django-insecure-uzqo*hxktxtrb85fw8(cc4&p4x$z5c@b0s1+0j-)s%e8vtku17'
+            DB_ENGINE: django.db.backends.postgresql
+            DB_NAME: '${DB_DATABASE}'
+            DB_USERNAME: '${DB_USERNAME}'
+            DB_PASSWORD: '${DB_PASSWORD:-secret}'
+            DB_HOST: '${DB_HOST}'
+            DB_PORT: '${DB_PORT}'
+        volumes:
+            - '.:/usr/src/app'
+        networks:
+            - django-network
+        depends_on:
+            - pgsql
+    pgsql:
+        image: 'postgres:13'
+        ports:
+            - '${FORWARD_DB_PORT:-5432}:5432'
+        environment:
+            POSTGRES_DB: '${DB_DATABASE}'
+            POSTGRES_USER: '${DB_USERNAME}'
+            PGPASSWORD: '${DB_PASSWORD:-secret}'
+            POSTGRES_PASSWORD: '${DB_PASSWORD:-secret}'
+        volumes:
+            - 'django-pgsql:/var/lib/postgresql/data'
+        networks:
+            - django-network
+        healthcheck:
+            test:
+                [
+                    "CMD",
+                    "pg_isready",
+                    "-q",
+                    "-d",
+                    "${DB_DATABASE}",
+                    "-U",
+                    "${DB_USERNAME}"
+                ]
+            retries: 3
+            timeout: 5s
+networks:
+    django-network:
+        driver: bridge
+volumes:
+    django-pgsql:
+        driver: local
