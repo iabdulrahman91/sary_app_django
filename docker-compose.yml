@@ -16,8 +16,8 @@ services:
         environment:
             SECRET_KEY: '${SECRET_KEY=}'
             DB_ENGINE: django.db.backends.postgresql
-            DB_NAME: '${DB_DATABASE}'
-            DB_USERNAME: '${DB_USERNAME}'
+            DB_NAME: '${DB_NAME}'
+            DB_USER: '${DB_USER}'
             DB_PASSWORD: '${DB_PASSWORD:-secret}'
             DB_HOST: '${DB_HOST}'
             DB_PORT: '${DB_PORT}'
@@ -33,7 +33,7 @@ services:
             - '${FORWARD_DB_PORT:-5432}:5432'
         environment:
             POSTGRES_DB: '${DB_DATABASE}'
-            POSTGRES_USER: '${DB_USERNAME}'
+            POSTGRES_USER: '${DB_USER}'
             PGPASSWORD: '${DB_PASSWORD:-secret}'
             POSTGRES_PASSWORD: '${DB_PASSWORD:-secret}'
         volumes:
@@ -49,7 +49,7 @@ services:
                     "-d",
                     "${DB_DATABASE}",
                     "-U",
-                    "${DB_USERNAME}"
+                    "${DB_USER}"
                 ]
             retries: 3
             timeout: 5s
