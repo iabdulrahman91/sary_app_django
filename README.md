@@ -6,7 +6,7 @@
 
 ## APP URL
 
-[a173b9962a8184534a44a4226ef0c9cd-a797f83e3788bf39.elb.us-east-2.amazonaws.com]
+[Main API URL](http://a173b9962a8184534a44a4226ef0c9cd-a797f83e3788bf39.elb.us-east-2.amazonaws.com/)
 
 This Repo is to Demonstrate my ability to:
 
